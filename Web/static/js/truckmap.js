@@ -91,13 +91,18 @@ function showLocation( position ) {
 	}
 }
 
+var num_of_cluster = 0;
+
 function calculateChecked(){
 	var totalWatth = 0;
 	var html = "";
 	var checked = 0;
+	num_of_cluster = 0;
 	html += "<div>";
 	for(var i=0; i<trailer_arr.length; i++){
 		if(trailer_arr[i].checked){
+			num_of_cluster++;
+
 			checked = 1;
 			totalWatth += trailer_arr[i].Watth;
 
@@ -118,6 +123,15 @@ function calculateChecked(){
 		$("#selected_trucks").html("No trucks selected")
 
 	console.log(totalWatth);
+	var fyiMessage = "";
+	if(num_of_cluster == 0 ){
+		fyiMessage = "Please select trucks from map to monitor.";
+	}else if(num_of_cluster == 1){
+		fyiMessage = "You are now monitoring a truck.";
+	}else{
+		fyiMessage = "You are now monitoring " + num_of_cluster + " trucks cluster.";
+	}
+	$("#info-area").html("<div class='alert alert-info alert-dismissible' role='alert'><button class='close' type='button' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>FYI:&nbsp;</strong>" + fyiMessage + "</div>");
 }
 
 function errorHandler( err ) {
