@@ -31,9 +31,15 @@ mixin nav_header
   li.dropdown-header
     block
 
-mixin panel(heading, style)
+mixin panel(heading, style, isMap)
   - var style = (typeof style === 'undefined') ? "default" : style
-  div( class=["panel", "panel-" + style] )
-    .panel-heading= heading
-    .panel-body
-      block
+  if !isMap
+    div( class=["panel", "panel-" + style] )
+      .panel-heading= heading
+      .panel-body
+        block
+  if isMap
+    div( class=["panel", "panel-" + style] )
+      .panel-heading= heading
+      .map_panel_body
+        block

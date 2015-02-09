@@ -1,1 +1,98 @@
-<h2>hello world</h2>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Energy Trailers</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		html { height: 100% }
+		body { height: 100%; margin: 0; padding: 0 }
+		#map_canvas { height: 100% }
+	</style>
+	<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDnVwY_nacG6nHywHWHsvEvZUOnMv6YCO0&sensor=true">
+</script>
+<script type="text/javascript">
+	var trailer_arr = [];
+	var len = 10;
+
+	function initialize() {
+		var geolocation = navigator.geolocation;
+		geolocation.getCurrentPosition(showLocation, errorHandler);
+	}
+
+	function showLocation( position ) {
+		var latitude = position.coords.latitude;
+		var longitude = position.coords.longitude;
+
+		var mapOptions = {
+			center: new google.maps.LatLng(latitude, longitude),
+			zoom: 12,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+
+		var trailerIcon = new google.maps.MarkerImage("http://www.ridgebacklighting.com/wp-content/uploads/2014/09/trailer-icon.png", null, null, null, new google.maps.Size(50,50));
+		var myIcon = new google.maps.MarkerImage("http://img3.wikia.nocookie.net/__cb20140427224234/caramelangel714/images/7/72/Location_Icon.png", null, null, null, new google.maps.Size(28,44));
+		
+		var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(latitude,longitude),
+			map: map,
+			draggable: false,
+			icon: myIcon,
+			title:"Your location",
+			animation: google.maps.Animation.DROP,
+			zindex:2
+		}).setMap(map);
+
+		for (var i = 1; i <= len; i++) {
+			trailer_arr.push({
+				trailerId: i,
+				latitude: latitude+i*getRandomArbitrary(-0.01,0.01),
+				longitude: longitude+i*getRandomArbitrary(-0.01,0.01),
+				Watth: getRandomArbitrary(0,1000),
+				checked: false
+			});
+		}
+
+		for (var i = 0; i < trailer_arr.length; i++) {
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(trailer_arr[i].latitude,trailer_arr[i].longitude),
+				map: map,
+				draggable: true,
+				icon: trailerIcon,
+				title: "trailer-"+(i+1),
+				animation: google.maps.Animation.DROP,
+				zindex:1
+			});
+			marker.setMap(map);
+
+			google.maps.event.addListener(marker, 'click', function() {
+				var key = parseInt(this.title.split('-')[1])
+				console.log(i)
+				
+				if(trailer_arr[key].checked)
+					trailer_arr[key].checked=false;
+				else
+					trailer_arr[key].checked=true;
+
+				console.log(trailer_arr[key])
+			});
+		}
+	}
+
+	function errorHandler( err ) {
+		if (err.code == 1) {
+		    // access is denied
+		}
+	}
+
+	// Returns a random number between min (inclusive) and max (exclusive)
+	function getRandomArbitrary(min, max) {
+		return Math.random() * (max - min) + min;
+	}
+</script>
+</head>
+<body onload="initialize()">
+	<div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+</html>

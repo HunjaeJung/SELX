@@ -12,4 +12,4 @@ app.get('/', function (req, res) {
   res.render('index.jade');
 });
 
-http.listen(80);
+http.listen(8080);
