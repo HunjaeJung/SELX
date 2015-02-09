@@ -17,14 +17,6 @@ body {
 	padding:0;
 }
 
-<<<<<<< Updated upstream
-.tooltip{
-	border:thin 1px #eee;
-	background-color:#FFFBF0;
-	padding:5px;
-	width:200px;
-=======
-
 .battery-gauge-frame{
 	width:100%;
 	height:36px;
@@ -58,5 +50,4 @@ body {
 .battery-description {
 	margin-top:10px;
 	margin-bottom: -5px;
->>>>>>> Stashed changes
 }
