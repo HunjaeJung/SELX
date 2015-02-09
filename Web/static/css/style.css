@@ -17,9 +17,46 @@ body {
 	padding:0;
 }
 
+<<<<<<< Updated upstream
 .tooltip{
 	border:thin 1px #eee;
 	background-color:#FFFBF0;
 	padding:5px;
 	width:200px;
+=======
+
+.battery-gauge-frame{
+	width:100%;
+	height:36px;
+	border:4px solid #ddd;
+	background:white;
+	border-radius: 18px;
+	padding:0px;
+}
+
+.battery-bar{
+	min-width:42px !important;
+	height:28px;
+	border-radius: 14px;
+	background-color:gray;
+	line-height:28px;
+}
+
+#battery-bar{
+	width:40%;
+	background-color:#DF5353;
+	color:white;
+}
+
+#battery-bar img.battery-icon{
+	height:16px;
+	margin-top:-3px;
+	margin-left:8px;
+	padding-right:5px;
+}
+
+.battery-description {
+	margin-top:10px;
+	margin-bottom: -5px;
+>>>>>>> Stashed changes
 }
