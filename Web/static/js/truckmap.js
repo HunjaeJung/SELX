@@ -38,7 +38,9 @@ function showLocation( position ) {
 			latitude: latitude+(i+1)*getRandomArbitrary(-scale,scale),
 			longitude: longitude+(i+1)*getRandomArbitrary(-scale,scale),
 			Watth: getRandomArbitrary(0,1000),
-			checked: false
+			GenWatt: getRandomArbitrary(0,100),
+			ConWatt: getRandomArbitrary(0,100),
+			checked: true
 		});
 	}
 
@@ -47,7 +49,7 @@ function showLocation( position ) {
 			position: new google.maps.LatLng(trailer_arr[i].latitude,trailer_arr[i].longitude),
 			map: map,
 			draggable: false,
-			icon: trailerIcon,
+			icon: trailerIcon_selected,
 			title: "trailer-"+i,
 			animation: google.maps.Animation.DROP,
 			zindex:1
@@ -79,7 +81,9 @@ function showLocation( position ) {
 		google.maps.event.addListener(marker, 'mouseover', function() {
 			var key = parseInt(this.title.split('-')[1])
 			var html = "<div>Trailer #" + (trailer_arr[key].trailerId+1) + "</div>";
-			html += "<div>Energy " + trailer_arr[key].Watth.toFixed(2) + "kWh</div>";
+			html += "<div>It has " + trailer_arr[key].Watth.toFixed(2) + "kWh</div>";
+			html += "<div>It consumes " + trailer_arr[key].ConWatt.toFixed(2) + "kW</div>";
+			html += "<div>It generates " + trailer_arr[key].GenWatt.toFixed(2) + "kW</div>";
 			html += "<div>longitude: "+trailer_arr[key].longitude.toFixed(2)+", latitude: "+trailer_arr[key].latitude.toFixed(2)+"</div>"
 			infowindow.content = html;
 		    infowindow.open(map,this);
@@ -89,6 +93,8 @@ function showLocation( position ) {
 		    infowindow.close(map,this);
 		});	
 	}
+
+	calculateChecked();
 }
 
 var num_of_cluster = 0;
@@ -108,14 +114,14 @@ function calculateChecked(){
 
 			html += "<div>Trailer #"
 			html += (trailer_arr[i].trailerId+1)
-			html += " generated <b>"
+			html += " has <b>"
 			html += trailer_arr[i].Watth.toFixed(2)
 			html += "</b>kWh</div>"
 		}
 	}
 	html += "</div>";
 	html += "<div><hr/>"
-	html += "Total <b>"+totalWatth.toFixed(2)+"</b>kWh energy generated"
+	html += "The trailers have total <b>"+totalWatth.toFixed(2)+"</b>kWh energy"
 	html += "</div>"
 	if(checked)
 		$("#selected_trucks").html(html)
