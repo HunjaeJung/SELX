@@ -1,0 +1,15 @@
+include mixins
+doctype html
+html( lang="ko" )
+  head
+    title="Truck Manager"
+    include head
+  body
+    div.container
+      include navigation
+      div.row
+        div.col-md-4
+          +panel("Truck Map") Truck
+        div.col-md-8
+          +panel("Panel Heading") We are a fairly small, flexible design studio that designs for print and web. We work flexibly with clients to fulfil their design needs. Whether you need to create a brand from scratch, including marketing materials and a beautiful and functional website or whether you are looking for a design refresh we are confident you will be pleased with the results.
+    include foot
