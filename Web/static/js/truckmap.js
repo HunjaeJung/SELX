@@ -31,11 +31,11 @@ function showLocation( position ) {
 	}).setMap(map);
 
 	var scale = 0.006;
-	for (var i = 1; i <= len; i++) {
+	for (var i = 0; i < len; i++) {
 		trailer_arr.push({
 			trailerId: i,
-			latitude: latitude+i*getRandomArbitrary(-scale,scale),
-			longitude: longitude+i*getRandomArbitrary(-scale,scale),
+			latitude: latitude+(i+1)*getRandomArbitrary(-scale,scale),
+			longitude: longitude+(i+1)*getRandomArbitrary(-scale,scale),
 			Watth: getRandomArbitrary(0,1000),
 			checked: false
 		});
@@ -47,7 +47,7 @@ function showLocation( position ) {
 			map: map,
 			draggable: true,
 			icon: trailerIcon,
-			title: "trailer-"+(i+1),
+			title: "trailer-"+i,
 			animation: google.maps.Animation.DROP,
 			zindex:1
 		});
@@ -55,18 +55,45 @@ function showLocation( position ) {
 
 		google.maps.event.addListener(marker, 'click', function() {
 			var key = parseInt(this.title.split('-')[1])
-			console.log(i)
-			
 			if(trailer_arr[key].checked)
 				trailer_arr[key].checked=false;
 			else
 				trailer_arr[key].checked=true;
 
-			console.log(trailer_arr[key])
+			console.log(trailer_arr[key]);
 
-
+			calculateChecked();
 		});
 	}
+}
+
+function calculateChecked(){
+	var totalWatth = 0;
+	var html = "";
+	var checked = 0;
+	html += "<div>";
+	for(var i=0; i<trailer_arr.length; i++){
+		if(trailer_arr[i].checked){
+			checked = 1;
+			totalWatth += trailer_arr[i].Watth;
+
+			html += "<div>Trailer #"
+			html += (trailer_arr[i].trailerId+1)
+			html += " generated <b>"
+			html += trailer_arr[i].Watth.toFixed(2)
+			html += "</b>Wh</div>"
+		}
+	}
+	html += "</div>";
+	html += "<div><hr/>"
+	html += "Total <b>"+totalWatth.toFixed(2)+"</b>Wh energy generated"
+	html += "</div>"
+	if(checked)
+		$("#selected_trucks").html(html)
+	else
+		$("#selected_trucks").html("No trucks selected")
+
+	console.log(totalWatth);
 }
 
 function errorHandler( err ) {
