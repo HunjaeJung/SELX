@@ -46,7 +46,7 @@ function showLocation( position ) {
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(trailer_arr[i].latitude,trailer_arr[i].longitude),
 			map: map,
-			draggable: true,
+			draggable: false,
 			icon: trailerIcon,
 			title: "trailer-"+i,
 			animation: google.maps.Animation.DROP,
@@ -79,7 +79,7 @@ function showLocation( position ) {
 		google.maps.event.addListener(marker, 'mouseover', function() {
 			var key = parseInt(this.title.split('-')[1])
 			var html = "<div>Trailer #" + (trailer_arr[key].trailerId+1) + "</div>";
-			var html = "<div>Energy " + trailer_arr[key].Watth + "Wh</div>";
+			var html = "<div>Energy " + trailer_arr[key].Watth.toFixed(2) + "kWh</div>";
 			html += "<div>longitude: "+trailer_arr[key].longitude.toFixed(2)+", latitude: "+trailer_arr[key].latitude.toFixed(2)+"</div>"
 			infowindow.content = html;
 		    infowindow.open(map,this);
@@ -105,12 +105,12 @@ function calculateChecked(){
 			html += (trailer_arr[i].trailerId+1)
 			html += " generated <b>"
 			html += trailer_arr[i].Watth.toFixed(2)
-			html += "</b>Wh</div>"
+			html += "</b>kWh</div>"
 		}
 	}
 	html += "</div>";
 	html += "<div><hr/>"
-	html += "Total <b>"+totalWatth.toFixed(2)+"</b>Wh energy generated"
+	html += "Total <b>"+totalWatth.toFixed(2)+"</b>kWh energy generated"
 	html += "</div>"
 	if(checked)
 		$("#selected_trucks").html(html)
