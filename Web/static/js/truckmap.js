@@ -79,7 +79,7 @@ function showLocation( position ) {
 		google.maps.event.addListener(marker, 'mouseover', function() {
 			var key = parseInt(this.title.split('-')[1])
 			var html = "<div>Trailer #" + (trailer_arr[key].trailerId+1) + "</div>";
-			var html = "<div>Energy " + trailer_arr[key].Watth.toFixed(2) + "kWh</div>";
+			html += "<div>Energy " + trailer_arr[key].Watth.toFixed(2) + "kWh</div>";
 			html += "<div>longitude: "+trailer_arr[key].longitude.toFixed(2)+", latitude: "+trailer_arr[key].latitude.toFixed(2)+"</div>"
 			infowindow.content = html;
 		    infowindow.open(map,this);
