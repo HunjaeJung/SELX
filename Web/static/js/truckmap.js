@@ -2,6 +2,7 @@ var trailer_arr = [];
 var len = 10;
 var maxGen = 100;
 var maxCon = 100;
+var maxBat = 1000;
 
 function initialize() {
 	var geolocation = navigator.geolocation;
@@ -39,7 +40,7 @@ function showLocation( position ) {
 			trailerId: i,
 			latitude: latitude+(i+1)*getRandomArbitrary(-scale,scale),
 			longitude: longitude+(i+1)*getRandomArbitrary(-scale,scale),
-			Watth: getRandomArbitrary(0,1000),
+			Watth: getRandomArbitrary(0,maxBat),
 			GenWatt: getRandomArbitrary(0,maxGen),
 			ConWatt: getRandomArbitrary(0,maxCon),
 			checked: true
@@ -137,8 +138,9 @@ function calculateChecked(){
 
 	console.log(totalWatth);
 
-	gauge.setGenerationGauge(len*maxGen,totalGenWatt);
-	gauge.setConsumptionGauge(len*maxCon,totalConWatt);
+	gauge.setGenerationGauge(num_of_cluster*maxGen,totalGenWatt);
+	gauge.setConsumptionGauge(num_of_cluster*maxCon,totalConWatt);
+	gauge.setBatteryGauge(num_of_cluster*maxBat,totalWatth)
 
 	var fyiMessage = "";
 	if(num_of_cluster == 0 ){
