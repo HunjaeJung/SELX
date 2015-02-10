@@ -1,5 +1,7 @@
 var trailer_arr = [];
 var len = 10;
+var maxGen = 100;
+var maxCon = 100;
 
 function initialize() {
 	var geolocation = navigator.geolocation;
@@ -38,8 +40,8 @@ function showLocation( position ) {
 			latitude: latitude+(i+1)*getRandomArbitrary(-scale,scale),
 			longitude: longitude+(i+1)*getRandomArbitrary(-scale,scale),
 			Watth: getRandomArbitrary(0,1000),
-			GenWatt: getRandomArbitrary(0,100),
-			ConWatt: getRandomArbitrary(0,100),
+			GenWatt: getRandomArbitrary(0,maxGen),
+			ConWatt: getRandomArbitrary(0,maxCon),
 			checked: true
 		});
 	}
@@ -103,6 +105,9 @@ function calculateChecked(){
 	var totalWatth = 0;
 	var html = "";
 	var checked = 0;
+	var totalGenWatt = 0;
+	var totalConWatt = 0;
+
 	num_of_cluster = 0;
 	html += "<div>";
 	for(var i=0; i<trailer_arr.length; i++){
@@ -111,6 +116,8 @@ function calculateChecked(){
 
 			checked = 1;
 			totalWatth += trailer_arr[i].Watth;
+			totalGenWatt += trailer_arr[i].GenWatt;
+			totalConWatt += trailer_arr[i].ConWatt;
 
 			html += "<div>Trailer #"
 			html += (trailer_arr[i].trailerId+1)
@@ -129,6 +136,10 @@ function calculateChecked(){
 		$("#selected_trucks").html("No trucks selected")
 
 	console.log(totalWatth);
+
+	gauge.setGenerationGauge(len*maxGen,totalGenWatt);
+	gauge.setConsumptionGauge(len*maxCon,totalConWatt);
+
 	var fyiMessage = "";
 	if(num_of_cluster == 0 ){
 		fyiMessage = "Please select trucks from map to monitor.";
