@@ -111,7 +111,7 @@ $(function () {
     };
 
     // The generation gauge
-    $('#container-speed').highcharts(Highcharts.merge(generationGaugeOptions, {
+    $('#container-generation').highcharts(Highcharts.merge(generationGaugeOptions, {
         yAxis: {
             min: 0,
             max: 200,
@@ -129,7 +129,7 @@ $(function () {
             data: [80],
             dataLabels: {
                 format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.3f}</span><br/>' +
                        '<span style="font-size:12px;color:silver">kW</span></div>'
             },
             tooltip: {
@@ -140,7 +140,7 @@ $(function () {
     }));
 
     // The usage gauge
-    $('#container-rpm').highcharts(Highcharts.merge(usageGaugeOptions, {
+    $('#container-consumption').highcharts(Highcharts.merge(usageGaugeOptions, {
         yAxis: {
             min: 0,
             max: 5,
@@ -154,7 +154,7 @@ $(function () {
             data: [1],
             dataLabels: {
                 format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.3f}</span><br/>' +
                        '<span style="font-size:12px;color:silver">kW</span></div>'
             },
             tooltip: {
@@ -163,41 +163,5 @@ $(function () {
         }]
 
     }));
-
-    // Bring life to the dials
-    setInterval(function () {
-        // Speed
-        var chart = $('#container-speed').highcharts(),
-            point,
-            newVal,
-            inc;
-
-        if (chart) {
-            point = chart.series[0].points[0];
-            inc = Math.round((Math.random() - 0.5) * 100);
-            newVal = point.y + inc;
-
-            if (newVal < 0 || newVal > 200) {
-                newVal = point.y - inc;
-            }
-
-            point.update(newVal);
-        }
-
-        // RPM
-        chart = $('#container-rpm').highcharts();
-        if (chart) {
-            point = chart.series[0].points[0];
-            inc = Math.random() - 0.5;
-            newVal = point.y + inc;
-
-            if (newVal < 0 || newVal > 5) {
-                newVal = point.y - inc;
-            }
-
-            point.update(newVal);
-        }
-    }, 2000);
-
 
 });
