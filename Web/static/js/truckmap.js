@@ -3,6 +3,10 @@ var len = 10;
 var maxGen = 100;
 var maxCon = 100;
 var maxBat = 1000;
+var markers = [];
+var map;
+var trailerIcon;
+var trailerIcon_selected;
 
 function initialize() {
 	var geolocation = navigator.geolocation;
@@ -19,11 +23,11 @@ function showLocation( position ) {
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 
-	var trailerIcon = new google.maps.MarkerImage("http://www.ridgebacklighting.com/wp-content/uploads/2014/09/trailer-icon.png", null, null, null, new google.maps.Size(25,25));
-	var trailerIcon_selected = new google.maps.MarkerImage("http://www.iconsfind.com/wp-content/uploads/2013/11/CarTrailer-icon.png", null, null, null, new google.maps.Size(25,25));
+	trailerIcon = new google.maps.MarkerImage("http://www.ridgebacklighting.com/wp-content/uploads/2014/09/trailer-icon.png", null, null, null, new google.maps.Size(25,25));
+	trailerIcon_selected = new google.maps.MarkerImage("http://www.iconsfind.com/wp-content/uploads/2013/11/CarTrailer-icon.png", null, null, null, new google.maps.Size(25,25));
 	var myIcon = new google.maps.MarkerImage("http://img3.wikia.nocookie.net/__cb20140427224234/caramelangel714/images/7/72/Location_Icon.png", null, null, null, new google.maps.Size(28,44));
 	
-	var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 	var marker = new google.maps.Marker({
 		position: new google.maps.LatLng(latitude,longitude),
 		map: map,
@@ -48,6 +52,10 @@ function showLocation( position ) {
 	}
 
 	for (var i = 0; i < trailer_arr.length; i++) {
+
+		createCheckboxes();
+		checkedChange();
+
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(trailer_arr[i].latitude,trailer_arr[i].longitude),
 			map: map,
@@ -57,6 +65,7 @@ function showLocation( position ) {
 			animation: google.maps.Animation.DROP,
 			zindex:1
 		});
+		markers.push(marker);
 		marker.setMap(map);
 
 		google.maps.event.addListener(marker, 'click', function() {
@@ -64,13 +73,14 @@ function showLocation( position ) {
 			if(trailer_arr[key].checked){
 				trailer_arr[key].checked=false;
 				this.icon = trailerIcon;
+				document.getElementById("trailer_check-"+key).checked=false;
 			}else{
 				trailer_arr[key].checked=true;
 				this.icon = trailerIcon_selected;
+				document.getElementById("trailer_check-"+key).checked=true;
 			}
-			console.log(trailer_arr[key]);
 
-			calculateChecked();
+			checkedChange();
 
 			this.setMap(map);
 		});
@@ -96,13 +106,44 @@ function showLocation( position ) {
 		    infowindow.close(map,this);
 		});	
 	}
+}
 
-	calculateChecked();
+function createCheckboxes(){
+	var html = "";
+	html += "<div>";
+	for(var i=0;i<trailer_arr.length;i++){
+		html += "<div>";
+		if(trailer_arr[i].checked){
+			html += "<input type='checkbox' class='trailer_checkbox' checked=true id='trailer_check-"+i+"'/>";
+		}else{
+			html += "<input type='checkbox' class='trailer_checkbox' checked=false id='trailer_check-"+i+"'/>";
+		}
+		html += "Trailer #"
+		html += (trailer_arr[i].trailerId+1)
+		html += " has <b>"
+		html += trailer_arr[i].Watth.toFixed(2)
+		html += "</b>kWh</div>"
+	}
+
+	$("#selected_trucks").html(html);
+
+	$(".trailer_checkbox").change(function(){
+		key = parseInt(this.id.split('-')[1]);
+		if(this.checked){
+			trailer_arr[key].checked=true;
+			markers[key].icon = trailerIcon_selected;
+		}else{
+			trailer_arr[key].checked=false;
+			markers[key].icon = trailerIcon;
+		}
+
+		markers[key].setMap(map);
+		checkedChange();
+	})
 }
 
 var num_of_cluster = 0;
-
-function calculateChecked(){
+function checkedChange(){
 	var totalWatth = 0;
 	var html = "";
 	var checked = 0;
@@ -110,7 +151,6 @@ function calculateChecked(){
 	var totalConWatt = 0;
 
 	num_of_cluster = 0;
-	html += "<div>";
 	for(var i=0; i<trailer_arr.length; i++){
 		if(trailer_arr[i].checked){
 			num_of_cluster++;
@@ -119,24 +159,18 @@ function calculateChecked(){
 			totalWatth += trailer_arr[i].Watth;
 			totalGenWatt += trailer_arr[i].GenWatt;
 			totalConWatt += trailer_arr[i].ConWatt;
-
-			html += "<div>Trailer #"
-			html += (trailer_arr[i].trailerId+1)
-			html += " has <b>"
-			html += trailer_arr[i].Watth.toFixed(2)
-			html += "</b>kWh</div>"
 		}
 	}
-	html += "</div>";
-	html += "<div><hr/>"
-	html += "The trailers have total <b>"+totalWatth.toFixed(2)+"</b>kWh energy"
-	html += "</div>"
-	if(checked)
-		$("#selected_trucks").html(html)
-	else
-		$("#selected_trucks").html("No trucks selected")
 
-	console.log(totalWatth);
+	html += "<hr/>"
+	if(num_of_cluster==0){
+		html += "No trailers selected";
+	}else if(num_of_cluster==1){
+		html += num_of_cluster + " trailer have <b>"+totalWatth.toFixed(2)+"</b>kWh energy"
+	}else{
+		html += num_of_cluster + " trailers have total <b>"+totalWatth.toFixed(2)+"</b>kWh energy"
+	}
+	$("#summary_trucks").html(html)
 
 	gauge.setGenerationGauge(num_of_cluster*maxGen,totalGenWatt);
 	gauge.setConsumptionGauge(num_of_cluster*maxCon,totalConWatt);
