@@ -16,8 +16,8 @@ var gauge = {
 		var percentage = value / max * 100;
 		percentage = percentage.toFixed(1) + "%";
 		$("#bat-percent").html(percentage);
-		$("#bat-current").html(value);
-		$("#bat-capacity").html(max);
-		$("#battery-bar").css({width:percentage});
+		$("#bat-current").html(parseFloat(value).toFixed(3));
+		$("#bat-capacity").html(parseFloat(max).toFixed(3));
+		$("#battery-bar").animate({width:percentage});
 	}
 }
