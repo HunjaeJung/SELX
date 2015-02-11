@@ -26,7 +26,7 @@ function showLocation( position ) {
 	trailerIcon = new google.maps.MarkerImage("http://www.ridgebacklighting.com/wp-content/uploads/2014/09/trailer-icon.png", null, null, null, new google.maps.Size(25,25));
 	trailerIcon_selected = new google.maps.MarkerImage("http://www.iconsfind.com/wp-content/uploads/2013/11/CarTrailer-icon.png", null, null, null, new google.maps.Size(25,25));
 	var myIcon = new google.maps.MarkerImage("http://img3.wikia.nocookie.net/__cb20140427224234/caramelangel714/images/7/72/Location_Icon.png", null, null, null, new google.maps.Size(28,44));
-	
+
 	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 	var marker = new google.maps.Marker({
 		position: new google.maps.LatLng(latitude,longitude),
@@ -84,27 +84,28 @@ function showLocation( position ) {
 
 			this.setMap(map);
 		});
-	
+
 		var contentString = ""
 		var infowindow = new google.maps.InfoWindow({
-				content: contentString,
-				maxWidth: 200
-		});	
+			content: contentString,
+			maxWidth: 200
+		});    
 
 		google.maps.event.addListener(marker, 'mouseover', function() {
-			var key = parseInt(this.title.split('-')[1])
-			var html = "<div>Trailer #" + (trailer_arr[key].trailerId+1) + "</div>";
+			var key = parseInt(this.title.split('-')[1]);
+			console.log(key);
+			var html = "<div>Trailer #" + key +"-"+ (trailer_arr[key].trailerId+1) + "</div>";
 			html += "<div>It has " + trailer_arr[key].Watth.toFixed(2) + "kWh</div>";
 			html += "<div>It consumes " + trailer_arr[key].ConWatt.toFixed(2) + "kW</div>";
 			html += "<div>It generates " + trailer_arr[key].GenWatt.toFixed(2) + "kW</div>";
 			html += "<div>longitude: "+trailer_arr[key].longitude.toFixed(2)+", latitude: "+trailer_arr[key].latitude.toFixed(2)+"</div>"
 			infowindow.content = html;
-		    infowindow.open(map,this);
-		});	
+			infowindow.open(map,this);
+		});    
 
 		google.maps.event.addListener(marker, 'mouseout', function() {
-		    infowindow.close(map,this);
-		});	
+			infowindow.close(map,this);
+		});    
 	}
 }
 
@@ -189,9 +190,9 @@ function checkedChange(){
 
 function errorHandler( err ) {
 	if (err.code == 1) {
-	    // access is denied
-	}
-}
+         // access is denied
+     }
+ }
 
 // Returns a random number between min (inclusive) and max (exclusive)
 function getRandomArbitrary(min, max) {
