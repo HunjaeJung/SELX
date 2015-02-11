@@ -21,3 +21,39 @@ var gauge = {
 		$("#battery-bar").animate({width:percentage});
 	}
 }
+
+var records = {
+	setValuesStarting6AM : function (generationArray, consumptionArray) {
+		this.setGenerationValuesStarting6AM(generationArray);
+		this.setConsumptionValuesStarting6AM(consumptionArray);
+	},
+	setGenerationValuesStarting6AM : function (valueArray) {
+		var chart = $("#record-container").highcharts();
+		var chartSeries = chart.series[0];
+		valueArray.forEach(function(e,i){
+			records.setValueAtIndexForChartSeries(chartSeries, i, e);
+		});
+	},
+	setConsumptionValuesStarting6AM : function (valueArray) {
+		var chart = $("#record-container").highcharts();
+		var chartSeries = chart.series[1];
+		valueArray.forEach(function(e,i){
+			records.setValueAtIndexForChartSeries(chartSeries, i, e);
+		});
+	},
+	setGenerationValueAtTimePoint : function (timePoint, value) {
+		var chart = $("#record-container").highcharts();
+		var chartSeries = chart.series[0];
+		timePoint = timePoint >= 6 ? timePoint - 6 : timePoint + 18;
+		this.setValueAtIndexForChartSeries(chartSeries, timePoint, value);
+	},
+	setConsumptionValueAtTimePoint : function (timePoint, value) {
+		var chart = $("#record-container").highcharts();
+		var chartSeries = chart.series[1];
+		timePoint = timePoint >= 6 ? timePoint - 6 : timePoint + 18;
+		this.setValueAtIndexForChartSeries(chartSeries, timePoint, value);
+	},
+	setValueAtIndexForChartSeries : function (chartSeries, index, value) {
+		chartSeries.data[index].update(value);
+	}
+}
