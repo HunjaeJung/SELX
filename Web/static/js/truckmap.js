@@ -180,12 +180,15 @@ function checkedChange(){
 	var fyiMessage = "";
 	if(num_of_cluster == 0 ){
 		fyiMessage = "Please select trucks from map to monitor.";
+		blurryCharts(true);
 	}else if(num_of_cluster == 1){
 		fyiMessage = "You are now monitoring a truck.";
+		blurryCharts(false);
 	}else{
 		fyiMessage = "You are now monitoring " + num_of_cluster + " trucks cluster.";
+		blurryCharts(false);
 	}
-	$("#info-area").html("<div class='alert alert-info alert-dismissible' role='alert'><button class='close' type='button' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>FYI:&nbsp;</strong>" + fyiMessage + "</div>");
+	fyiAlert(fyiMessage);
 }
 
 function errorHandler( err ) {

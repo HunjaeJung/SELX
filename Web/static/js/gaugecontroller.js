@@ -57,3 +57,19 @@ var records = {
 		chartSeries.data[index].update(value);
 	}
 }
+
+function blurryCharts(isBlurry){
+	if(isBlurry){
+		$(".blurTargets").addClass("blurTrue");
+		$("#info-area").hide();
+		$(".absoluteMessage").show();
+	}else{
+		$(".blurTargets").removeClass("blurTrue");
+		$("#info-area").show();
+		$(".absoluteMessage").hide();
+	}
+}
+
+function fyiAlert(fyiMessage){
+	$("#info-area").html("<div class='alert alert-info alert-dismissible' role='alert'><button class='close' type='button' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>FYI:&nbsp;</strong>" + fyiMessage + "</div>");
+}

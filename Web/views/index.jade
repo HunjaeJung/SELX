@@ -21,13 +21,13 @@ html( lang="ko" )
         div.col-md-8
           div.row
             div.col-xs-12#info-area
-            div.col-xs-12
+            div.col-xs-12.blurTargets
               +panel("<i class=\"fa fa-plug\"></i> Battery Status")
                 div.battery-gauge-frame
                   div.battery-bar#battery-bar
                     img.battery-icon(src="/static/images/battery.png")
                 p.battery-description <span id="bat-current">0</span>kWh (<span id="bat-percent">0%</span> - Capacity: <span id="bat-capacity">0</span>kWh)
-            div.col-xs-12
+            div.col-xs-12.blurTargets
               div.row
                 div.col-md-6
                   +panel("<i class=\"fa fa-sign-in\"></i> Generation in Realtime", "success")
@@ -35,7 +35,9 @@ html( lang="ko" )
                 div.col-md-6
                   +panel("<i class=\"fa fa-sign-out\"></i> Comsumption in Realtime", "warning")
                     div#container-consumption(style="height:200px; width: 100%;")
-            div.col-xs-12
+            div.col-xs-12.blurTargets
               +panel("<i class=\"fa fa-area-chart\"></i> Usage Records")
                 div#record-container(style="width:100% height: 400px; margin: 0 auto")
+          div.absoluteMessage
+            | SELECT TRUCKS TO BEGIN MONITORING
     include foot
