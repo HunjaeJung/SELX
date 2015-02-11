@@ -53,7 +53,7 @@ body {
 }
 
 .blurTrue {
-	opacity: 0.7;
+	opacity: 0.4;
 	-webkit-filter: blur(10px);
 	-webkit-animation: blurTrue 1s;
 }
@@ -71,7 +71,7 @@ body {
 	width: 300px;
 	margin-left:-150px;
 	text-align: center;
-	text-shadow: 0px 2px 3px #666;
+	text-shadow: 0px 2px 3px #fff;
 	font-size:28px;
 
 }
