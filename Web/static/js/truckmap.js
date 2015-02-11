@@ -86,15 +86,15 @@ function showLocation( position ) {
 		});
 
 		var contentString = ""
-		var infowindow = new google.maps.InfoWindow({
-			content: contentString,
-			maxWidth: 200
-		});    
+		var infowindow;
 
 		google.maps.event.addListener(marker, 'mouseover', function() {
+			infowindow = new google.maps.InfoWindow({
+				content: contentString,
+				maxWidth: 200
+			});    
 			var key = parseInt(this.title.split('-')[1]);
-			console.log(key);
-			var html = "<div>Trailer #" + key +"-"+ (trailer_arr[key].trailerId+1) + "</div>";
+			var html = "<div>Trailer #" + (trailer_arr[key].trailerId+1) + "</div>";
 			html += "<div>It has " + trailer_arr[key].Watth.toFixed(2) + "kWh</div>";
 			html += "<div>It consumes " + trailer_arr[key].ConWatt.toFixed(2) + "kW</div>";
 			html += "<div>It generates " + trailer_arr[key].GenWatt.toFixed(2) + "kW</div>";
