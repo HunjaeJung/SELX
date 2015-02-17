@@ -23,9 +23,9 @@ function showLocation( position ) {
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 
-	trailerIcon = new google.maps.MarkerImage("http://www.ridgebacklighting.com/wp-content/uploads/2014/09/trailer-icon.png", null, null, null, new google.maps.Size(25,25));
-	trailerIcon_selected = new google.maps.MarkerImage("http://www.iconsfind.com/wp-content/uploads/2013/11/CarTrailer-icon.png", null, null, null, new google.maps.Size(25,25));
-	var myIcon = new google.maps.MarkerImage("http://img3.wikia.nocookie.net/__cb20140427224234/caramelangel714/images/7/72/Location_Icon.png", null, null, null, new google.maps.Size(28,44));
+	trailerIcon = new google.maps.MarkerImage("/static/images/truck_default.png", null, null, null, new google.maps.Size(25,25));
+	trailerIcon_selected = new google.maps.MarkerImage("/static/images/truck_selected.png", null, null, null, new google.maps.Size(25,25));
+	var myIcon = new google.maps.MarkerImage("/static/images/marker_red.png", null, null, null, new google.maps.Size(28,44));
 
 	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 	var marker = new google.maps.Marker({
