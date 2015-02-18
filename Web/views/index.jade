@@ -17,7 +17,6 @@ html( lang="ko" )
               +panel("Selected trucks information") 
                 div.selected_trucks#selected_trucks No trucks selected
                 div.summary_trucks#summary_trucks
-
         div.col-md-8
           div.row
             div.col-xs-12#info-area
@@ -38,9 +37,6 @@ html( lang="ko" )
             div.col-xs-12.blurTargets.mode-cluster
               +panel("<i class=\"fa fa-area-chart\"></i> Usage Records")
                 div#record-container(style="width:100% height: 400px; margin: 0 auto")
-            div.col-xs-12.blurTargets.mode-single
-              +panel("<i class=\"fa fa-gauge\"></i> Individual Truck Monitoring")
-                div#record-container(style=)
           div.absoluteMessage
             | SELECT TRUCKS TO BEGIN MONITORING
     include foot
