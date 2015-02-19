@@ -1,4 +1,11 @@
 var gauge = {
+	individualGaugeBox : function (truckId) {
+		if(truckId){}
+			return $("#indi-box#truck-" + truckId);
+		}else{
+			return $("#indi-box");
+		}
+	},
 	setGenerationGauge : function (max, value) {
 		var chart = $('#container-generation').highcharts();
 		this.updateChart (chart, max, value);
@@ -19,6 +26,13 @@ var gauge = {
 		$("#bat-current").html(parseFloat(value).toFixed(3));
 		$("#bat-capacity").html(parseFloat(max).toFixed(3));
 		$("#battery-bar").animate({width:percentage});
+	},
+	clearIndividualGauges : function () {
+		this.individualGaugeBox().html("");
+	},
+	addIndividualGauge : function (truckId, value) {
+		var division = $("<div>");
+		this.individualGaugeBox().append();
 	}
 }
 
